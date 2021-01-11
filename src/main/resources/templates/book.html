@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>Book Store Template, Free CSS Template, CSS Website Layout</title>
+
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}" type="text/css"/>
+</head>
+<body>
+<div id="templatemo_container">
+<div id="templatemo_menu">
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/goToBook" class="current">Books</a></li>
+        <li><a href="/goToSearch">Search</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="/goToBlog">Blogs</a></li>
+    </ul>
+</div> <!-- end of menu -->
+
+
+<h1>Welcom to Library</h1>
+
+    <!--section id="products" class="section">
+
+        <div th:each="book : ${Books}">
+                <div class="productContainer">
+                    <div class="productContainerItem">
+                    <img id="pic1" th:src="${book.ImagePath}">
+                    <input type="text" name="book"
+                           th:value="${book.name}">
+                    </div>
+                </div>
+        </div>
+
+    </section-->
+
+<div id="templatemo_content_right">
+
+    <div th:each="book : ${Books}" class="templatemo_product_box">
+        <h1> <span th:text="${book.name}"> </span> </h1>
+        <img th:src="${book.ImagePath}" id="pic1" width=100 height=150>
+        <div class="product_info">
+            <p><span th:text="${book.description}"></span></p>
+            <h3>free</h3>
+            <div class="buy_now_button"><a th:href="${book.pdfPath}" target="_blank">Read Now</a></div>
+            <div class="detail_button"><a href="subpage.html">Detail</a></div>
+        </div>
+
+        <div class="cleaner_with_width">&nbsp;</div>
+    </div>
+
+
+
+</div>
+
+<div class="cleaner_with_height">&nbsp;</div>
+
+<div id="templatemo_footer">
+
+    <a href="subpage.html">Home</a> | <a href="subpage.html">Search</a> | <a href="subpage.html">Books</a> | <a href="#">FAQs</a> | <a href="#">Contact Us</a><br />
+    Copyright © 2020 <a href="#"><strong>Abdelrahman Elayashy</strong></a>
+</div>
+</div>
+</body>
+</html>
