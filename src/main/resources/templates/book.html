@@ -13,15 +13,11 @@
     <link rel="stylesheet" th:href="@{/css/main.css}" type="text/css"/>
 </head>
 <body>
+
+
 <div id="templatemo_container">
 <div id="templatemo_menu">
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/goToBook" class="current">Books</a></li>
-        <li><a href="/goToSearch">Search</a></li>
-        <li><a href="#">Contact</a></li>
-        <li><a href="/goToBlog">Blogs</a></li>
-    </ul>
+    <div th:replace="fragments/menu :: Fmenu"> </div>
 </div> <!-- end of menu -->
 
 
@@ -50,7 +46,7 @@
             <p><span th:text="${book.description}"></span></p>
             <h3>free</h3>
             <div class="buy_now_button"><a th:href="${book.pdfPath}" target="_blank">Read Now</a></div>
-            <div class="detail_button"><a href="subpage.html">Detail</a></div>
+            <div class="detail_button"><a th:href="@{'/cart/add/' + ${book.id}}">Buy Free</a></div>
         </div>
 
         <div class="cleaner_with_width">&nbsp;</div>

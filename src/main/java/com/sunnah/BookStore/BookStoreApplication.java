@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import java.util.Optional;
 
 @SpringBootApplication
 @AllArgsConstructor
@@ -42,12 +43,13 @@ public class BookStoreApplication implements CommandLineRunner {
 				"A blog (a truncation of weblog)[1] is a discussion or informational website published on the World Wide Web consisting of discrete, often informal diary-style text entries (posts). Posts are typically displayed in reverse chronoloer systems helps integrate MABs and single-author blogs into the news media. Blog can also be used as a verb, meaning to maintain or add content to a blog.",
 				"Abdelrahman Elayashy");
 		postRepository.save(post);
-
-		User user = new User("alaiashy4@outlook.com","Root123",",Root123",
+		//Optional<User> user = userRepository.findByEmail("omar@outlook.com");
+		//System.out.println("HI I am OMAR: " + user.get().getUsername());
+		User user = new User("alaiashy@outlook.com","asd",",asd",
 				Role.ADMIN, false);
-		//userRepository.deleteAll();
-		//userRepository.save(user);
-		userService.signUpUser(user);
+	//	userRepository.deleteAll();
+	//	userRepository.save(user);
+		//userService.signUpUser(user);
 
 	}
 }

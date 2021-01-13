@@ -32,10 +32,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return authProvider;
     }
 
+
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
-        auth.userDetailsService(userService);
     }
 
     @Bean
@@ -49,11 +49,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/goToCart", "/cart").authenticated()
-                .anyRequest().permitAll()
+                .antMatchers("/css/*","/images/*", "/pdfs/*",
+                        "/templates/*", "/", "/register", "/sign-up/**").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/goToLogin")
+                .loginPage("/login")
+                .failureUrl("/login-error")
+                .defaultSuccessUrl("/", true)
+                .usernameParameter("email")
                 .permitAll()
                 .and()
                 .logout().invalidateHttpSession(true)

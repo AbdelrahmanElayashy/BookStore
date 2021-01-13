@@ -26,7 +26,6 @@ public class UserService implements UserDetailsService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
     public UserService(UserRepository userRepository, TokenService tokenService) {
         this.userRepository = userRepository;
         this.tokenService = tokenService;
@@ -35,13 +34,18 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         final Optional<User> user = userRepository.findByEmail(email);
-        return user.isPresent() ? user.get() : null;
+        //System.out.println("HI :********" + user.get().getUsername());
+
+        if(user.isEmpty()) {
+            System.out.println("In load Exception************");
+            throw new UsernameNotFoundException("Email or Password is incorrect!");
+        }
+
+        return user.get();
     }
 
     public boolean signUpUser(User user) {
 
-        if (loadUserByUsername(user.getEmail()) != null)
-            return false;
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
@@ -68,17 +72,19 @@ public class UserService implements UserDetailsService {
 
     public boolean ValidUserInput(User user, BindingResult result) {
 
-        if (loadUserByUsername(user.getEmail()) != null) {
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             result.rejectValue("email", "error.user", "*Email is already exists");
             return false;
         }
 
 
+        System.out.println("user Rep");
+
 
         if (result.hasErrors()) {
             return false;
         }
-
+        System.out.println("user Rep");
         if (!this.confirmPassword(user.getPassword(), user.getPasswordConfirmed())) {
             result.rejectValue("passwordConfirmed", "error.user", "*Password does not match");
             return false;

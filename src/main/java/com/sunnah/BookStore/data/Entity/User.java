@@ -52,6 +52,12 @@ public class User implements UserDetails {
     @Column(columnDefinition = "boolean default false")
     private Boolean enabled;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "basket_id", referencedColumnName = "id")
+    private Basket basket;
+
+
+
     public User(@Email String email, @Pattern(regexp = "((?=.*[A-Z]).{6,10})", message = "*Password must have one upper case, one lower case and should be between 6 and 10 characters") String password, String passwordConfirmed, Role role, Boolean enabled) {
         this.email = email;
         this.password = password;

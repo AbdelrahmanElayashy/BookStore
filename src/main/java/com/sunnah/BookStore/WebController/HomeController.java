@@ -13,32 +13,9 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/goToSearch")
-    public String goToSearch() {
-        return "search";
+    @GetMapping("/index")
+    public String getHome() {
+        return "index";
     }
 
-    @GetMapping("/goToBook")
-    public String goToBook() {
-        return "forward:/book";
-    }
-
-    @GetMapping("/goToBlog")
-    public String goToBlog(){
-        return "forward:/blog";
-    }
-
-    @GetMapping("/contact")
-    public String contact(){return "cart";};
-
-    @GetMapping("/goToLogin")
-    public String goToLogin(){
-
-        return "forward:/login";
-    }
-
-    @GetMapping("/goToCart")
-    public String goToCart() {
-        return "forward:/cart";
-    }
 }

@@ -6,6 +6,8 @@ import com.sunnah.BookStore.data.Entity.User;
 import lombok.AllArgsConstructor;
 import org.apache.catalina.authenticator.SpnegoAuthenticator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,10 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -25,29 +24,26 @@ import javax.validation.Valid;
 @AllArgsConstructor
 public class LoginController {
 
+    @Autowired
     private final UserService userService;
 
     @GetMapping("/login")
     public String loginGet() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("in login");
+
         if(null == authentication || authentication instanceof AnonymousAuthenticationToken)
             return "login";
         System.out.println("in cart");
-        return "forward:/cart";
+        return "index";
     }
 
-    @PostMapping("/login")
-    public String login(@Valid @ModelAttribute("loginUser") Login login,
-                        BindingResult result){
+    @GetMapping("/login-error")
+    public String loginError() {
 
-        if(!userService.checkLogin(login, result)) {
-            return "login";
-        }
-
-        return "cart";
+        return "login-error";
     }
+
 
     @GetMapping("/register")
     public String register() {
@@ -55,16 +51,18 @@ public class LoginController {
         return "registration";
     }
 
-    @PostMapping("/sign-up")
+    @RequestMapping(value = "/sign-up", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
     public String signUp(@Validated @ModelAttribute("user") User user,
                   BindingResult result, Model model) {
-
+        System.out.println("in sign up");
         if(userService.ValidUserInput(user, result)) {
+            System.out.println("in sign up serv");
             userService.signUpUser(user);
             model.addAttribute("dataSaved","Data successful saved");
             return "login";
         }
-
+        System.out.println("in regis up");
         return "registration";
 
     }

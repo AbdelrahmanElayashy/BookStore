@@ -2,75 +2,59 @@
 <html lang="en" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
                 xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>My Cart</title>
     <link href="/css/cartStyle.css" rel="stylesheet">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
 </head>
 <body>
 
-<span>[[${#request.remoteUser}]]</span>
-<h1><span sec:authentication="name">Username</span></h1>
+<!--h1><span sec:authentication="name">Username</span></h1-->
 
 <div class="wrap cf">
-    <h1 class="projTitle">Responsive Table<span>-Less</span> Shopping Cart</h1>
+
     <div class="heading cf">
         <h1>My Cart</h1>
-        <a href="/goToBook" class="continue">Continue Shopping</a>
+        <a href="/book" class="continue">Continue Shopping</a>
     </div>
     <div class="cart">
-        <!--    <ul class="tableHead">
+            <!--ul class="tableHead">
               <li class="prodHeader">Product</li>
               <li>Quantity</li>
               <li>Total</li>
                <li>Remove</li>
-            </ul>-->
+            </ul-->
         <ul class="cartWrap">
-            <li class="items odd">
-
-                <div class="infoWrap">
-                    <div class="cartSection">
-                        <img src="http://lorempixel.com/output/technics-q-c-300-300-4.jpg" alt="" class="itemImg" />
-                        <p class="itemNumber">#QUE-007544-002</p>
-                        <h3>Item Name 1</h3>
-
-                        <p> <input type="text"  class="qty" placeholder="3"/> x $5.00</p>
-
-                        <p class="stockStatus"> In Stock</p>
-                    </div>
-
-
-                    <div class="prodTotal cartSection">
-                        <p>$15.00</p>
-                    </div>
-                    <div class="cartSection removeWrap">
-                        <a href="#" class="remove">x</a>
-                    </div>
-                </div>
-            </li>
+            <div th:each="item : ${cartItems}">
             <li class="items even">
 
                 <div class="infoWrap">
                     <div class="cartSection">
 
-                        <img src="http://lorempixel.com/output/technics-q-c-300-300-4.jpg" alt="" class="itemImg" />
-                        <p class="itemNumber">#QUE-007544-002</p>
-                        <h3>Item Name 1</h3>
-
-                        <p> <input type="text"  class="qty" placeholder="3"/> x $5.00</p>
+                        <img th:src="${item.ImagePath}" alt="" class="itemImg" />
+                        <h3> <span th:text="${item.name}"> </span> </h3>
+                        <h3> <span th:text="${item.id}"> </span> </h3>
+                        <p> <input type="text"  class="qty" placeholder="1"/> x $0.00</p>
 
                         <p class="stockStatus"> In Stock</p>
                     </div>
 
 
                     <div class="prodTotal cartSection">
-                        <p>$15.00</p>
+                        <p>$0.00</p>
                     </div>
                     <div class="cartSection removeWrap">
-                        <a href="#" class="remove">x</a>
+                        <a th:href="@{'/cart/delete/' + ${item.id}}" class="remove">x</a>
                     </div>
                 </div>
-            </li>
 
+            </li>
+                <div class="row mt-3"></div>
+            </div>
 
 
 
@@ -79,8 +63,6 @@
         </ul>
     </div>
 
-    <div class="promoCode"><label for="promo">Have A Promo Code?</label><input type="text" name="promo" placholder="Enter Code" />
-        <a href="#" class="btn"></a></div>
 
     <div class="subtotal cf">
         <ul>
@@ -94,6 +76,12 @@
 </div>
 
 
+
+
+
+<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 </body>
 </html>

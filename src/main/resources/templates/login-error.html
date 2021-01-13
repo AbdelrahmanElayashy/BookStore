@@ -16,10 +16,11 @@
         <div class="form-group">
             <input name="email" th:field="*{email}" type="text" class="form-control" placeholder="Email"
                    autofocus="true"/>
-            <span class="has-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
 
             <input name="password"  th:field="*{password}" type="password" class="form-control" placeholder="Password"/>
-            <span class="has-error" th:text="${errorLogin}"></span>
+            <div class="alert alert-danger">
+                <strong>Failed!</strong> Your Email or Password is incorrect.
+            </div>
 
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
