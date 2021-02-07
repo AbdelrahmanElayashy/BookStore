@@ -16,6 +16,7 @@
 
 	<properties>
 		<java.version>11</java.version>
+
 	</properties>
 
 	<dependencies>
@@ -74,10 +75,11 @@
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
-			<version>4.0.0-2</version>
+			<version>4.0.0</version>
 		</dependency>
 
-    </dependencies>
+
+	</dependencies>
 
 	<build>
 		<plugins>

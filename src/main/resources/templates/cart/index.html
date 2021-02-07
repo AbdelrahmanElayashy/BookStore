@@ -1,0 +1,132 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=0.6"/>
+    <title>My Cart</title>
+    <link href="/css/cartStyle.css" rel="stylesheet">
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+<!--h1><span sec:authentication="name">Username</span></h1-->
+
+<div class="wrap cf">
+
+    <div class="heading cf">
+        <h1>My Cart</h1>
+        <a href="/book" class="continue">Continue Shopping</a>
+    </div>
+    <span th:if="${EmptyCart}">
+        <div class="alert alert-danger">
+                <strong>Failed!</strong> Your Cart is empty!
+        </div>
+
+    </span>
+    <div class="cart">
+        <!--ul class="tableHead">
+          <li class="prodHeader">Product</li>
+          <li>Quantity</li>
+          <li>Total</li>
+           <li>Remove</li>
+        </ul-->
+        <ul class="cartWrap">
+            <div th:if="${cartItems!=null and !cartItems.isEmpty()}" th:each="item : ${cartItems}">
+                <li class="items even">
+
+                    <div class="infoWrap">
+                        <div class="cartSection">
+
+                            <img th:src="${item.book.ImagePath}" alt="" class="itemImg"/>
+                            <h3><span th:text="${item.book.name}"> </span></h3>
+                            <h3><span th:text="${item.book.id}"> </span></h3>
+                            <p>
+                            <form th:action="@{'/cart/amount/' + ${item.book.id}}">
+                                <input class="inp" type="number" th:name="amount" onkeydown="return false"
+                                       th:value="${item.amount}" min="1" max="10" step="1"
+                                       onchange="this.form.submit()"/>
+                                <div th:text="${ErrorAmount}" style="color:red"></div>
+                            </form>
+                            x $0.00
+                            </p>
+                            <p class="stockStatus"> In Stock</p>
+                        </div>
+
+
+                        <div class="prodTotal cartSection">
+                            <p>$0.00</p>
+                        </div>
+                        <div class="cartSection removeWrap">
+                            <a th:href="@{'/cart/delete/' + ${item.book.id}}" class="remove"
+                               style="color:lightcoral">x</a>
+                        </div>
+                    </div>
+
+                </li>
+                <div class="row mt-3"></div>
+            </div>
+
+
+            <!--<li class="items even">Item 2</li>-->
+
+        </ul>
+    </div>
+
+
+    <div class="subtotal cf">
+        <ul>
+
+            <li class="totalRow"><span class="label">Shipping</span><span class="value">$0.00</span></li>
+
+            <li class="totalRow final"><span class="label">Total</span><span class="value">$0.00</span></li>
+            <li class="totalRow"><a href="/checkout" class="btn continue">Checkout</a></li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    body {
+        padding: 10px;
+        margin: 10px
+    }
+
+    input[type=number] {
+        /*for absolutely positioning spinners*/
+        position: relative;
+        padding: 5px;
+        padding-right: 25px;
+    }
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        opacity: 1;
+    }
+
+    input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button {
+        -webkit-appearance: inner-spin-button !important;
+        width: 25px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+    }
+
+    input.inp {
+        border: 2px solid lightgreen;
+        border-radius: 5px;
+    }
+
+</style>
+
+
+</body>
+</html>

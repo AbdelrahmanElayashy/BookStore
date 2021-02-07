@@ -1,6 +1,6 @@
-package com.sunnah.BookStore.WebController;
+package com.sunnah.BookStore.webController;
 
-import com.sunnah.BookStore.business.domain.Login;
+import com.sunnah.BookStore.business.domain.LoginDto;
 import com.sunnah.BookStore.data.Entity.User;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,5 +14,7 @@ public class DefaultModelAttribute {
     }
 
     @ModelAttribute("loginUser")
-    public Login getDefaultLogin() {return new Login();}
+    public LoginDto getDefaultLogin() {
+        return new LoginDto();
+    }
 }

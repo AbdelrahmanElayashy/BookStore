@@ -1,13 +1,16 @@
 package com.sunnah.BookStore.data.Entity;
 
 import com.sunnah.BookStore.business.domain.Categorie;
+import com.sunnah.BookStore.business.domain.Language;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
+
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -33,16 +36,23 @@ public class Book implements Serializable {
     @NotNull
     private String pdfPath;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
     private Categorie category;
 
+    @Enumerated(EnumType.STRING)
+    private Language language;
 
-    public Book(@NotNull String name, String description, @NotNull String imagePath, @NotNull String pdfPath, @NotNull Categorie category) {
+    @OneToMany(mappedBy = "book")
+    private List<BasketItem> basketItems = new ArrayList<>();
+
+
+    public Book(@NotNull String name, String description, @NotNull String imagePath, @NotNull String pdfPath,
+                @NotNull Language lang, Categorie cat) {
         this.name = name;
         this.description = description;
         this.imagePath = imagePath;
         this.pdfPath = pdfPath;
-        this.category = category;
+        this.language = lang;
+        this.category = cat;
     }
 }

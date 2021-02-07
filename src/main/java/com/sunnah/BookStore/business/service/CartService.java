@@ -3,6 +3,8 @@ package com.sunnah.BookStore.business.service;
 import com.sunnah.BookStore.business.domain.BasketHolder;
 import com.sunnah.BookStore.data.Entity.BasketItem;
 import com.sunnah.BookStore.data.Entity.Book;
+import com.sunnah.BookStore.data.repository.BasketItemRepository;
+import com.sunnah.BookStore.data.repository.BasketRepository;
 import com.sunnah.BookStore.data.repository.BookRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,19 +22,30 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 
 @Data
-@NoArgsConstructor
+@AllArgsConstructor
 @Service
 public class CartService {
 
-    @Autowired private BasketHolder basketHolder;
-    @Autowired private BookRepository bookRepository;
+    @Autowired
+    private final BasketHolder basketHolder;
+    @Autowired
+    private final BookRepository bookRepository;
+    @Autowired
+    private final BasketRepository basketRepository;
+    @Autowired
+    private final BasketItemRepository basketItemRepository;
 
     public boolean addItemToCart(long bookId) {
         Optional<Book> book = bookRepository.findById(bookId);
-        if(book.isEmpty()) {
+        if (book.isEmpty()) {
             return false;
         }
-        basketHolder.add(bookId, 1);
+        basketHolder.add(book.get(), 1);
+        return true;
+    }
+
+    public boolean addAmountToItem(long bookId, int amount) {
+        basketHolder.addAmount(bookId, amount);
         return true;
     }
 
@@ -43,7 +56,7 @@ public class CartService {
     public List<Book> listBookInCart() {
 
         List<Book> books = listBasket().stream().map(item -> {
-            return bookRepository.findById(item.getBookId()).get();
+            return bookRepository.findById(item.getBook().getId()).get();
         }).collect(toList());
 
         return books;
@@ -51,5 +64,9 @@ public class CartService {
 
     public void deleteItemFromCart(long bookId) {
         this.basketHolder.delete(bookId);
+    }
+
+    public void saveBasketItem(BasketItem basketItem) {
+        this.basketItemRepository.save(basketItem);
     }
 }

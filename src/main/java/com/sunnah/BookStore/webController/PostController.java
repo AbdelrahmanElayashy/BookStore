@@ -1,4 +1,4 @@
-package com.sunnah.BookStore.WebController;
+package com.sunnah.BookStore.webController;
 
 import com.sunnah.BookStore.data.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;

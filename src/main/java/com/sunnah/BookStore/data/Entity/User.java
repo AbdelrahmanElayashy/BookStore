@@ -15,8 +15,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 
 
 @Entity
@@ -45,8 +44,8 @@ public class User implements UserDetails {
     @Transient
     private String passwordConfirmed;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
+    private List<AuthGroup> authGroups;
 
 
     @Column(columnDefinition = "boolean default false")
@@ -56,21 +55,34 @@ public class User implements UserDetails {
     @JoinColumn(name = "basket_id", referencedColumnName = "id")
     private Basket basket;
 
+    private String firstName;
+    private String lastName;
+    private String street;
+    private int homeNumber;
+    private int zip;
+    @Email
+    private String contactEmail;
+    private String state;
 
 
-    public User(@Email String email, @Pattern(regexp = "((?=.*[A-Z]).{6,10})", message = "*Password must have one upper case, one lower case and should be between 6 and 10 characters") String password, String passwordConfirmed, Role role, Boolean enabled) {
+    public User(@Email String email, @Pattern(regexp = "((?=.*[A-Z]).{6,10})", message = "*Password must have one upper case, one lower case and should be between 6 and 10 characters") String password, String passwordConfirmed, List<AuthGroup> authGroups, Boolean enabled) {
         this.email = email;
         this.password = password;
         this.passwordConfirmed = passwordConfirmed;
-        this.role = role;
         this.enabled = enabled;
+        this.authGroups = authGroups;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        final SimpleGrantedAuthority auth = new SimpleGrantedAuthority(Role.USER.name());
-        return Collections.singleton(auth);
-
+        if (null == this.authGroups) {
+            return Collections.emptySet();
+        }
+        Set<SimpleGrantedAuthority> grantedAuthorities = new HashSet<>();
+        authGroups.forEach(group -> {
+            grantedAuthorities.add(new SimpleGrantedAuthority(group.getAuthGroup()));
+        });
+        return grantedAuthorities;
     }
 
     @Override

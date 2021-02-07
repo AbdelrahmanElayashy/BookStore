@@ -1,68 +1,55 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
-    <title>Book Store Template, Free CSS Template, CSS Website Layout</title>
-
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
-    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
-    <link rel="stylesheet" th:href="@{/css/main.css}" type="text/css"/>
+    <title>Bootstrap Theme Simply Me</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" th:href="@{/css/design.css}" type="text/css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 
 
-<div id="templatemo_container">
-<div id="templatemo_menu">
-    <div th:replace="fragments/menu :: Fmenu"> </div>
-</div> <!-- end of menu -->
+<div th:replace="fragments/menu :: Fmenu"></div>
 
 
-<h1>Welcom to Library</h1>
+<!-- end of menu -->
 
-    <!--section id="products" class="section">
 
-        <div th:each="book : ${Books}">
-                <div class="productContainer">
-                    <div class="productContainerItem">
-                    <img id="pic1" th:src="${book.ImagePath}">
-                    <input type="text" name="book"
-                           th:value="${book.name}">
-                    </div>
+<div class="bg-3">
+    <table class="table">
+        <tr th:each="book : ${Books}">
+            <div class="container-fluid  text-center mr-5 mt-2 ml-5 mb-2"
+                 style="width: 25rem; display: inline-block">
+
+                <img class="card-img-top" th:src="${book.ImagePath}" alt="Card image" style="width:100%">
+                <div class="card-body">
+                    <h4 class="card-title"><span th:text="${book.name}"> </span></h4>
+                    <p class="card-text"><span th:text="${book.description}"> </span></p>
+                    <a th:href="@{'/cart/add/' + ${book.id}}" class="btn btn-primary">Buy Free</a>
+                    <a th:href="${book.pdfPath}" target="_blank" class="btn btn-primary stretched-link">Read Now</a>
                 </div>
-        </div>
 
-    </section-->
-
-<div id="templatemo_content_right">
-
-    <div th:each="book : ${Books}" class="templatemo_product_box">
-        <h1> <span th:text="${book.name}"> </span> </h1>
-        <img th:src="${book.ImagePath}" id="pic1" width=100 height=150>
-        <div class="product_info">
-            <p><span th:text="${book.description}"></span></p>
-            <h3>free</h3>
-            <div class="buy_now_button"><a th:href="${book.pdfPath}" target="_blank">Read Now</a></div>
-            <div class="detail_button"><a th:href="@{'/cart/add/' + ${book.id}}">Buy Free</a></div>
-        </div>
-
-        <div class="cleaner_with_width">&nbsp;</div>
-    </div>
-
-
+            </div>
+        </tr>
+    </table>
 
 </div>
 
-<div class="cleaner_with_height">&nbsp;</div>
 
-<div id="templatemo_footer">
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        var scrollpos = localStorage.getItem('scrollpos');
+        if (scrollpos) window.scrollTo(0, scrollpos);
+    });
 
-    <a href="subpage.html">Home</a> | <a href="subpage.html">Search</a> | <a href="subpage.html">Books</a> | <a href="#">FAQs</a> | <a href="#">Contact Us</a><br />
-    Copyright © 2020 <a href="#"><strong>Abdelrahman Elayashy</strong></a>
-</div>
-</div>
+    window.onbeforeunload = function (e) {
+        localStorage.setItem('scrollpos', window.scrollY);
+    };
+</script>
+
 </body>
 </html>

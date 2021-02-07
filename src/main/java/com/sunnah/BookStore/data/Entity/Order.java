@@ -3,27 +3,26 @@ package com.sunnah.BookStore.data.Entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
+@Entity
 @Data
 @NoArgsConstructor
-@Entity
-@Table(name = "BasketItem")
-public class BasketItem {
+@Table(name = "`ORDER`")
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "basket_id", nullable = false)
     private Basket basket;
 
-    @ManyToOne
-    @JoinColumn(name = "book_id", nullable = false)
-    private Book book;
+    private boolean closed;
 
-    private int amount;
-
-
+    private long requestNumber;
 }

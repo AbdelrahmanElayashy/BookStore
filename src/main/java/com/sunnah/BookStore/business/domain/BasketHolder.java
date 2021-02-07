@@ -19,39 +19,50 @@ public class BasketHolder {
 
     private Basket basket;
 
-    public void add(long bookId, int amount) {
-        if(basket == null) {
+    public BasketHolder() {
+        this.reset();
+    }
+
+    public void add(Book book, int amount) {
+        if (basket == null) {
             initBasket();
         }
-        if(!this.findBook(bookId)) {
-            basket.addItem(toBasketItem(bookId, amount));
+        if (!this.findBook(book.getId())) {
+            basket.addItem(toBasketItem(book, 1));
         }
     }
 
+    public void addAmount(long bookId, int amount) {
+        basket.getItems().forEach(item -> {
+            if (item.getBook().getId() == bookId) {
+                item.setAmount(amount);
+            }
+        });
+    }
+
     public void delete(long bookId) {
-        if(basket == null)
+        if (basket == null)
             return;
         List<BasketItem> items = new ArrayList<>();
-        for(BasketItem item : basket.getItems()) {
-            if(item.getBookId() == bookId) {
+        for (BasketItem item : basket.getItems()) {
+            if (item.getBook().getId() == bookId) {
                 items.add(item);
             }
         }
         basket.getItems().removeAll(items);
     }
 
-    private BasketItem toBasketItem(long bookId, int amount) {
+    private BasketItem toBasketItem(Book book, int amount) {
         BasketItem item = new BasketItem();
-        item.setBookId(bookId);
+        item.setBook(book);
         item.setAmount(amount);
         return item;
     }
 
 
     private boolean findBook(long bookId) {
-
         for(BasketItem item : basket.getItems()) {
-            if(item.getBookId() == bookId)
+            if (item.getBook().getId() == bookId)
                 return true;
         }
         return false;

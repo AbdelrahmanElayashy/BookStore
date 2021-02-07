@@ -1,39 +1,145 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Book Store Template, Free CSS Template, CSS Website Layout</title>
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
-    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <link rel="stylesheet" th:href="@{/css/design.css}" type="text/css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 
 <div th:fragment="Fmenu">
 
-<div id="templatemo_menu">
-    <ul>
-        <li><a href="/" class="current">Home</a></li>
-        <li><a href="/book">Books</a></li>
-        <li><a href="/contact">Contact</a></li>
-        <li><a href="/blog">Blogs</a></li>
-        <li sec:authorize="isAnonymous()">
-            <a href="/login">Login</a>
-        </li>
-        <li sec:authorize="isAuthenticated()">
-            <a href="/logout">Logout</a>
-        </li>
-        <li sec:authorize="isAuthenticated()">
-            <a href="/cart">MyCart</a>
-        </li>
-    </ul>
+    <!-- Navbar -->
+
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+
+
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand glyphicon glyphicon-book" href="#">Islam</a>
+            </div>
+            <span th:text="#{lang.change}"></span>:
+            <select id="locales">
+                <option value=""></option>
+                <option value="en" th:text="#{lang.eng}"></option>
+                <option value="de" th:text="#{lang.de}"></option>
+            </select>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/"> <span th:text="#{home}"></span></a></li>
+                    <li><a href="/book"> <span th:text="#{books}"></span></a></li>
+                    <li><a href="/blog"> <span th:text="#{blogs}"></span></a></li>
+                    <li><a href="/contact"><span th:text="#{contact}"></span></a></li>
+                    <li class="nav-item">
+                        <a class="glyphicon glyphicon-log-in" href="/login" sec:authorize="isAnonymous()">
+                            <span th:text="#{login}"></span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a sec:authorize="hasRole('ROLE_ADMIN')" href="/admin" class="nav-link">
+                            Admin Page
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a sec:authorize="isAuthenticated()" href="/logout" class="nav-link">
+                            Logout
+                        </a>
+                    </li>
+                    <li>
+                        <a sec:authorize="hasRole('ROLE_USER')" href="/cart" class="glyphicon glyphicon-shopping-cart">
+                            MyCart
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="margin-up">
+    </div>
+
+
+    <!--nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+       <div class="previous"> <a class="navbar-brand" href="#">Islam Web</a> </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="nav-item" >
+                    <a class="nav-link" href="/book">Books</a>
+                </li>
+                <li class="nav-item" >
+                    <a class="nav-link " href="/blog">Blogs</a>
+                </li>
+                <li class="nav-item" >
+                    <a class="nav-link " href="#">Contact</a>
+                </li>
+                <li class="nav-item" >
+                    <a class="nav-link active" href="/login" sec:authorize="isAnonymous()">
+                        Login
+                    </a>
+                </li>
+                <li class="nav-item" >
+                    <a sec:authorize="hasRole('ROLE_USER')" href="/cart" class="nav-link active">
+                       MyCart
+                    </a>
+                </li>
+                <li class="nav-item" >
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" href="/admin" class="nav-link">
+                        Admin Page
+                    </a>
+                </li>
+                <li class="nav-item" >
+                    <a sec:authorize="isAuthenticated()" href="/logout" class="nav-link">
+                        Logout
+                    </a>
+                </li>
+
+
+
+
+            </ul>
+
+        </div>
+    </nav-->
 
 
 </div>
-</div>
 
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#locales").change(function () {
+            var selectedOption = $('#locales').val();
+            if (selectedOption != '') {
+                window.location.replace('international?lang=' + selectedOption);
+            }
+        });
+    });
+</script>
 
 </body>
 </html>

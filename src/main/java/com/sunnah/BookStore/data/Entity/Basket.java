@@ -19,20 +19,23 @@ public class Basket {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @OneToOne(mappedBy="basket")
+    @OneToOne(mappedBy = "basket")
     private User user;
 
-    @OneToMany(mappedBy="basket")
+    @OneToMany(mappedBy = "basket")
     private List<BasketItem> items = new ArrayList<>();
 
+    @OneToOne(mappedBy = "basket")
+    private Order order;
+
     public void removeItem(BasketItem item) {
-        if(this.items != null) {
+        if (this.items != null) {
             this.items.remove(item);
         }
     }
 
     public void addItem(BasketItem item) {
-        if(this.items == null) {
+        if (this.items == null) {
             this.items = new ArrayList<>();
         }
         item.setBasket(this);
